@@ -9,7 +9,6 @@ from tkinter.filedialog import askopenfilenames, asksaveasfilename
 #Variables
 ########
 
-
 ########
 #script
 ########
@@ -17,16 +16,25 @@ from tkinter.filedialog import askopenfilenames, asksaveasfilename
 ##########################################################################
 def main():
     """
+    Merges pdf documents and saves them in given Location
     """
     pdfOut = PdfFileMerger()
     pdfIn = pdfInput()
+    if len(pdfIn) < 2:
+        print("no input")
+        return
+    save = saveLocation()
+    if not save:
+        print("no output location")
+        return
     for elem in pdfIn:
         pdfOut.append(elem)
-    save = saveLocation()
     pdfOut.write(save)
 ##########################################################################
 def pdfInput():
     """
+    Asks for pdf documents as Input
+    @return tuple with filepaths
     """
     Tk().withdraw()
     files = askopenfilenames(title="Choose files", filetypes =[('pdf file', '*.pdf')])
@@ -36,6 +44,8 @@ def pdfInput():
 ##########################################################################
 def saveLocation():
     """
+    asks for save location and document name
+    @return filepath
     """
     Tk().withdraw()
     fileName = asksaveasfilename(title='Choose a filename', defaultextension='.pdf', filetypes =[('pdf file', '*.pdf')])
