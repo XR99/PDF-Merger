@@ -1,7 +1,7 @@
 ########
 #imports
 ########
-from PyPDF2 import PdfFileReader, PdfFileMerger
+from PyPDF2 import PdfFileMerger
 from tkinter import Tk
 from tkinter.filedialog import askopenfilenames, asksaveasfilename
 
@@ -16,40 +16,31 @@ from tkinter.filedialog import askopenfilenames, asksaveasfilename
 ##########################################################################
 def main():
     """
-    Merges pdf documents and saves them in given Location
+    function of pdf merge given as script(without gui)
+    """
+    print("Still in production")
+##########################################################################
+def merge(input, save):
+    """
+    Merges pdf documents
     """
     pdfOut = PdfFileMerger()
-    pdfIn = pdfInput()
-    if len(pdfIn) < 2:
-        print("no input")
-        return
-    save = saveLocation()
-    if not save:
-        print("no output location")
-        return
-    for elem in pdfIn:
-        pdfOut.append(elem)
-    pdfOut.write(save)
+    for elem in input:
+        try:
+            pdfOut.append(elem)
+        except:
+            pdfOut.close()
+            return
+    return pdfOut
 ##########################################################################
-def pdfInput():
+def save(pdf, location):
     """
-    Asks for pdf documents as Input
-    @return tuple with filepaths
+    Saves a given pdf file at a specific location
     """
-    Tk().withdraw()
-    files = askopenfilenames(title="Choose files", filetypes =[('pdf file', '*.pdf')])
-    return files
-
-
-##########################################################################
-def saveLocation():
-    """
-    asks for save location and document name
-    @return filepath
-    """
-    Tk().withdraw()
-    fileName = asksaveasfilename(title='Choose a filename', defaultextension='.pdf', filetypes =[('pdf file', '*.pdf')])
-    return fileName
+    try:
+        pdf.write(location)
+    except:
+        print("Error")
 
 
 if __name__ == "__main__":
