@@ -2,8 +2,6 @@
 #imports
 ########
 from PyPDF2 import PdfFileMerger
-from tkinter import Tk
-from tkinter.filedialog import askopenfilenames, asksaveasfilename
 
 ########
 #Variables
