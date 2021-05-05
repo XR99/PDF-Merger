@@ -1,7 +1,7 @@
 ########
 #imports
 ########
-from PyPDF2 import PdfFileMerger
+from PyPDF2 import PdfFileMerger, PdfFileReader
 import sys
 from tkinter import Tk
 from tkinter.filedialog import askopenfilenames, asksaveasfilename
@@ -17,7 +17,7 @@ from tkinter.filedialog import askopenfilenames, asksaveasfilename
 ##########################################################################
 def main():
     """
-    function of pdf merge given as script(without gui)
+    Merge pdfs a certain way based on given flag
     """
     if len(sys.argv) != 2 and len(sys.argv) != 3:
         print("You need to provide a flag!")
@@ -84,6 +84,31 @@ def pdfInput():
     files = askopenfilenames(title="Choose files", filetypes =[('pdf file', '*.pdf')])
     return files
 ##########################################################################
+def decrypt(filePaths):
+    """
+    checks if given pdfs are encrypted and decrypts them if necessary 
+    """
+    pdfList = []
+    for path in filePaths:
+        try:
+            pdfList.append(PdfFileReader(path))
+        except:
+            print("Cuold not create Pdf Object")
+    for pdf in pdfList:
+        if pdf.isEncrypted:
+            print("Encrypted")
+            inputDesc = "Provide password for{title}".format(pdf.getDocumentInfo().title)
+            i = 0
+            while True:
+                passwd = input(inputDesc)
+                check = pdf.decrypt(passwd)
+                i += 1
+                if check is 0 or i is 3:
+                    break
+    # need to put decrypted pdf in list?          
+    return pdfList
+
+###########################################################################
 def saveLocation():
     """
     asks for save location and document name
