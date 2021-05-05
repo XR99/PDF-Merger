@@ -3,6 +3,7 @@
 ########
 from PyPDF2 import PdfFileMerger, PdfFileReader
 import sys
+import argparse
 from tkinter import Tk
 from tkinter.filedialog import askopenfilenames, asksaveasfilename
 
@@ -19,6 +20,11 @@ def main():
     """
     Merge pdfs a certain way based on given flag
     """
+    parser = argparse.ArgumentParser(description='Merge pdf documents.')
+    parser.add_argument("-g", "--gui", help="provides a graphical user interface")
+    parser.add_argument("-d", "--directory", type=string,  help="merges all pdfs in a given directory")
+    args = parser.parse_args()
+
     if len(sys.argv) != 2 and len(sys.argv) != 3:
         print("You need to provide a flag!")
         print("If you need help use flag -h or --help")
