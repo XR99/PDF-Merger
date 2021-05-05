@@ -22,7 +22,7 @@ def main():
     """
     parser = argparse.ArgumentParser(description='Merge pdf documents.')
     parser.add_argument("-g", "--gui", help="provides a graphical user interface")
-    parser.add_argument("-d", "--directory", type=string,  help="merges all pdfs in a given directory")
+    parser.add_argument("-d", "--directory", type=str,  help="merges all pdfs in a given directory")
     args = parser.parse_args()
 
     if len(sys.argv) != 2 and len(sys.argv) != 3:
