@@ -21,16 +21,11 @@ def main():
     Merge pdfs a certain way based on given flag
     """
     parser = argparse.ArgumentParser(description='Merge pdf documents.')
-    parser.add_argument("-g", "--gui", help="provides a graphical user interface")
+    parser.add_argument("-g", "--gui", help="provides a graphical user interface", action="store_true")
     parser.add_argument("-d", "--directory", type=str,  help="merges all pdfs in a given directory")
     args = parser.parse_args()
 
-    if len(sys.argv) != 2 and len(sys.argv) != 3:
-        print("You need to provide a flag!")
-        print("If you need help use flag -h or --help")
-    elif sys.argv[1] == "-h" or sys.argv[1] == "--help":
-        print("Help for usage")
-    elif sys.argv[1] == "-g":
+    if args.gui:
         """
         Merge pdfs guided with gui filechooser
         """
@@ -49,14 +44,12 @@ def main():
         save(mergedPdf, pdfOut)
         print("Merge was successful")
         return
-    elif sys.argv[1] == "-d":
+    elif args.directory:
         """
         Merge all pdfs in a given directory
         """
-        if len(sys.argv) != 3:
-            print("U need to provide a directory Path with this flag!")
-            print("For usage use flag -h or --help")
-            return
+        print("provided directory: {}".format(args.directory))
+        return
 
 ##########################################################################
 def merge(input):
@@ -109,7 +102,7 @@ def decrypt(filePaths):
                 passwd = input(inputDesc)
                 check = pdf.decrypt(passwd)
                 i += 1
-                if check is 0 or i is 3:
+                if check == 0 or i == 3:
                     break
     # need to put decrypted pdf in list?          
     return pdfList
